@@ -1,6 +1,7 @@
 var resId;
 
-function goHere(goto_lat, goto_lng, id) {
+function goHere(goto_lat, goto_lng, id) {  
+
     resId = id;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -28,12 +29,14 @@ function goHere(goto_lat, goto_lng, id) {
 }
 
 function addStopButton() {
+    $("#goHereButton").css("display", "none");
     $("#"+resId).append("<button id='stopButton' class='btn btn-warning' onclick='stopDirection()'>Stop</button>");
 }
 
 function stopDirection() {
     directionsRenderer.setMap(null);
     $("#stopButton").remove();
+    $("#goHereButton").css("display", "block");
 }
 
 function calculateAndDisplayRoute(orig_pos, dest_pos) {       
@@ -45,6 +48,8 @@ function calculateAndDisplayRoute(orig_pos, dest_pos) {
         },
         (response, status) => {
             if (status === "OK") {
+                  
+                directionsRenderer.setMap(map);
                 directionsRenderer.setDirections(response);
                 addStopButton();
             } else {

@@ -41,7 +41,7 @@ function setMarkers() {
                 restaurants[i].foodSpecialty+" </div>"+
                 "<div><label><b>Type</b></label>: "+
                 restaurants[i].type+" </div>"+
-                "<div><button class='btn btn-info pull-right' onclick=goHere("+
+                "<div><button id='goHereButton' class='btn btn-info pull-right' onclick=goHere("+
                     restaurants[i].position.lat+","+
                     restaurants[i].position.lng+","+
                     restaurants[i].id+")>Go Here</button></div></div>";
