@@ -119,8 +119,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'C:/Users/nsp/Desktop/temp/Navagis/django-map/mymap/restaurant/static/css/common.css'
 STATIC_URL = '/static/'
-STATIC_ROOT = 'C:/Users/nsp/Desktop/temp/Navagis/django-map/mymap/restaurant/static/css/common.css'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 CEBU_LOC = { "lat": 10.3157, "lng": 123.8854 }
 # CEBU_LOC = { 'lat': -28.024, 'lng': 140.887 }

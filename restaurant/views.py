@@ -8,21 +8,12 @@ from django.forms.models import model_to_dict
 
 # Create your views here.
 def index(request):
-      restaurants = Restaurant.objects.all()
       restaurant_types = RestaurantType.objects.all()
-
-      restaurant_dict = []
-
-      for res in restaurants:
-            res_dict = model_to_dict(res)
-            res_dict['restaurant_type_name'] = res.restaurant_type.name
-            restaurant_dict.append(res_dict)
 
       context = {
             "center": settings.CEBU_LOC,
             "api_key": settings.MAP_API_KEY,
             "map_zoom": settings.MAP_ZOOM,
-            "restaurants": restaurant_dict,
             'restaurant_types': restaurant_types
       }
       return render(request, 'showRestaurants.html', context)
