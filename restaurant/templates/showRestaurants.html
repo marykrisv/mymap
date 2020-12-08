@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Restaurants in Cebu</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmHpdqFTXRjnWZC9BIkf6KyWYjzH_m2JE&callback=initMap&libraries=&v=weekly"
+      defer></script>
+    <link href="{% static 'css/common.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/mapShape.js' %}"></script>
+    <script src="{% static 'js/mapMarkers.js' %}"></script>
+    <script src="{% static 'js/mapDirection.js' %}"></script>
+  </head>
+  <body>
+    <div class="panel panel-default" id="filter">
+      <div class="panel-heading">Filter Restaurant</div>
+      <div class="panel-body">
+        <select class="form-control" id="res_type">
+          <option value="" disabled selected>Select Restaurant Type</option>
+          <option value="all">All</option>
+          {% for type in restaurant_types %}
+          <option value="{{ type.pk }}">{{ type.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="panel panel-default" id="shape">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-9 col-xs-9">
+            Shape
+          </div>
+          <div class="col-md-3 col-xs-3">
+            <div class="material-switch">
+              <input 
+                style="color: transparent"
+                id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
+              <label for="someSwitchOptionPrimary" class="label-primary"></label>
+            </div>
+          </div>
+        </div>        
+      </div>
+      <div class="panel-body">
+        <div>
+          <button 
+          disabled 
+          id="showRestaurantsInsideShape"
+          class="btn btn-primary pull-center">Show Restaurants</button>
+        </div>
+        <div id="listOfRes" style="display: none;">
+        </div>        
+      </div>
+    </div>
+    <div id="map"></div>
+  </body>
+  <script>
+    var center;
+    var zoom;
+    var restaurants = [];
+    var directionsService;
+    var directionsRenderer;
+    var map;  
+
+    $(document).ready(function () {
+      var showShape = false;
+            
+      initialize();  
+      initMap();
+
+      function initialize() {
+        center = {
+          lat: +'{{ center.lat }}',
+          lng: +'{{ center.lng }}',
+        };
+
+        zoom = +'{{ map_zoom }}';
+      }
+
+      $('#res_type').change(function() {
+        var selected = $(this).children("option:selected").val();
+        
+        $.ajax({                
+          url: "{% url 'filter' %}",
+          type: "POST",
+          data: { type: selected } ,
+          dataType: "json",
+          success: function (response) {
+            populateRestaurants(response);
+            setMarkers();
+          },
+          error: function (err) {
+            console.log("error");
+          }
+        });
+      });
+
+      $("#someSwitchOptionPrimary").change(function  () {
+        showShape = !showShape;
+
+        $("#listOfRes").empty();
+
+        if (showShape) {
+          showShapeInMap();
+          $("#showRestaurantsInsideShape").removeAttr('disabled');
+          $("#listOfRes").css('display', 'block');
+          $("#shape").css("height", "300px");
+        } else {
+          hideShapeInMap();
+          $("#showRestaurantsInsideShape").attr('disabled', 'true');
+          $("#listOfRes").css('display', 'none');
+          $("#shape").css("height", "100px");
+        }
+      });
+
+      $("#showRestaurantsInsideShape").click(function () {
+        getCurrentRectangleBound();
+      });
+      
+    });
+
+    function initMap() {        
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: +'{{ map_zoom }}',
+        center: center
+      });
+
+      directionsRenderer.setMap(map);        
+    }   
+  </script>
+</html>
