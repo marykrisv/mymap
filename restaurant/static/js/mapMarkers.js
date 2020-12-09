@@ -1,4 +1,4 @@
-markers = []
+var markers = []
 
 function populateRestaurants (res) {
     restaurants = [];
@@ -12,7 +12,9 @@ function populateRestaurants (res) {
           lng: +res[i].lng
         },
         foodSpecialty: res[i].food_specialty,
-        type: res[i].restaurant_type_name
+        type: res[i].restaurant_type_name,
+        visits: res[i].customer_visits,
+        revenue: res[i].revenue
       }
       restaurants.push(det);
     }
@@ -41,6 +43,10 @@ function setMarkers() {
                 restaurants[i].foodSpecialty+" </div>"+
                 "<div><label><b>Type</b></label>: "+
                 restaurants[i].type+" </div>"+
+                "<div><label><b>Revenue:</b></label>: <span>"+
+                restaurants[i].revenue+"</span></div>"+
+                "<div><label><b>Customer Visits:</b></label>: <span id='visits'>"+
+                restaurants[i].visits+"</span></div>"+
                 "<div><button id='goHereButton' class='btn btn-info pull-right' onclick=goHere("+
                     restaurants[i].position.lat+","+
                     restaurants[i].position.lng+","+

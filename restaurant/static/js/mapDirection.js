@@ -3,6 +3,7 @@ var resId;
 function goHere(goto_lat, goto_lng, id) {  
 
     resId = id;
+    
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -16,7 +17,6 @@ function goHere(goto_lat, goto_lng, id) {
             };            
             
             calculateAndDisplayRoute(orig_pos, dest_pos);
-            
         },
             () => {
                 console.log("Browser doesn't support Geolocation");
@@ -52,9 +52,31 @@ function calculateAndDisplayRoute(orig_pos, dest_pos) {
                 directionsRenderer.setMap(map);
                 directionsRenderer.setDirections(response);
                 addStopButton();
+                addCustomerCount();
             } else {
                 window.alert("Directions request failed due to " + status);
             }
         }
     );
+}
+
+function addCustomerCount() {
+    const ONE_CUSTOMER = 1;
+
+    $.ajax({                
+        url: "/add-customer-visit",
+        type: "POST",
+        data: { id: resId } ,
+        // dataType: "json",
+        success: function (response) {
+            if (response == 'OK') {
+                currCount = +$("#visits").html();
+                currCount = currCount+ONE_CUSTOMER;
+                $("#visits").html(currCount);
+            }
+        },
+        error: function (err) {
+          console.log("error");
+        }
+    });
 }

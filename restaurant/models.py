@@ -15,7 +15,7 @@ class Restaurant(models.Model):
     food_specialty = models.CharField(max_length=200)
     restaurant_type = models.ForeignKey(RestaurantType, on_delete=models.CASCADE)
     patrons = models.CharField(blank=True, max_length=200)
-    revenue = models.CharField(blank=True, max_length=200)
+    revenue = models.FloatField(blank=True, max_length=200)
 
     def __str__(self):
         return self.name

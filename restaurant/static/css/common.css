@@ -15,9 +15,9 @@
     background-color: white;
 }
 
-#shape {
+#showAnalytics {
     margin: 10px;
-    margin-top: 200px;
+    margin-top: 190px;
     z-index: 4;
     position: absolute;
     cursor: pointer;
@@ -26,6 +26,25 @@
     width: 250px;
     height: 100px;
     background-color: white;
+}
+
+#shape {
+    margin: 10px;
+    margin-top: 300px;
+    z-index: 4;
+    position: absolute;
+    cursor: pointer;
+    left: 0px;
+    top: 0px;
+    width: 250px;
+    height: 300px;
+    background-color: white;
+    transition: height 1s;
+}
+
+.collapsed {
+    transition: height 1s;
+    height: 100px !important;
 }
 
 #listOfRes {
@@ -84,4 +103,48 @@ html, body {
 .material-switch > input[type="checkbox"]:checked + label::after {
     background: inherit;
     left: 20px;
+}
+
+/* modal */
+button.btn-settings {
+    margin: 25px;
+    padding: 20px 30px;
+    font-size: 1.2em;
+    background-color: #337ab7;
+    color: white;
+}
+button.btn-settings:active {
+    color: white;
+}
+.modal {
+    overflow: hidden;
+}
+.modal-dialog {
+    margin-right: 0;
+    margin-left: 0;
+}
+.modal-header {
+    height:30px;
+    padding: 20px;
+    background-color:#18456b;
+    color:white;
+}
+.modal-title {
+    margin-top:-10px;
+    font-size:16px;
+}
+.modal-header .close {
+    margin-top:-10px;
+    color:#fff;
+}
+.modal-body {
+    color:#888;
+    padding: 5px 35px 20px;
+}
+.modal-body h3 {
+    text-align: center;
+}
+.modal-body p {
+    padding-top:10px;
+    font-size: 1.1em;
 }

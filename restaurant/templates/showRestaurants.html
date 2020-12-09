@@ -31,7 +31,22 @@
         </select>
       </div>
     </div>
-    <div class="panel panel-default" id="shape">
+    <div class="panel panel-default" id="showAnalytics">
+      <div class="panel-heading">
+        Analytics
+      </div>
+      <div class="panel-body">
+        <div>
+          <button 
+          id="showAnalyticsButton"
+          class="btn btn-primary pull-center"
+          href="#myModal" 
+          data-backdrop="false" 
+          data-toggle="modal">Show Analytics</button>
+        </div>      
+      </div>
+    </div>
+    <div class="panel panel-default collapsed" id="shape">
       <div class="panel-heading">
         <div class="row">
           <div class="col-md-9 col-xs-9">
@@ -59,6 +74,8 @@
       </div>
     </div>
     <div id="map"></div>
+
+    {% include "analytics.html" %}
   </body>
   <script>
     var center;
@@ -110,12 +127,12 @@
           showShapeInMap();
           $("#showRestaurantsInsideShape").removeAttr('disabled');
           $("#listOfRes").css('display', 'block');
-          $("#shape").css("height", "300px");
+          $("#shape").removeClass("collapsed");
         } else {
           hideShapeInMap();
           $("#showRestaurantsInsideShape").attr('disabled', 'true');
           $("#listOfRes").css('display', 'none');
-          $("#shape").css("height", "100px");
+          $("#shape").addClass("collapsed");
         }
       });
 
