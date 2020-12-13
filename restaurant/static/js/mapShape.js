@@ -13,10 +13,14 @@ function showShapeInMap() {
 
     rectangle = new google.maps.Rectangle({
         bounds: bounds,
-        editable: true,
+        editable: true,        
+        draggable: true,
+
     });
 
     rectangle.setMap(map);
+
+    rectangle.addListener("bounds_changed", getCurrentRectangleBound);
 }
 
 function hideShapeInMap() {
@@ -30,12 +34,10 @@ function getCurrentRectangleBound() {
     var resInsideRect = [];
 
     for (var i = 0; i < restaurants.length; i++) {
-    pos = restaurants[i].position;
+        pos = restaurants[i].position;
 
-    flag = false;
-
-    if ((pos.lng >= bounds.Sa.i && pos.lng <= bounds.Sa.j) ||
-        (pos.lng <= bounds.Sa.i && pos.lng >= bounds.Sa.j)) {
+        if ((pos.lng >= bounds.Ra.i && pos.lng <= bounds.Ra.j) ||
+            (pos.lng <= bounds.Ra.i && pos.lng >= bounds.Ra.j)) {
             if ((pos.lat <= bounds.Wa.i && pos.lat >= bounds.Wa.j) ||
                 (pos.lat >= bounds.Wa.i && pos.lat <= bounds.Wa.j)) {
                 resInsideRect.push(restaurants[i]);
