@@ -1,5 +1,5 @@
 # mymap
-A Python application has been developed that is capable of generating rectangular shapes on a map based on your category search. For instance, if you select the category "restaurants," the application will provide a rectangular shape on the map indicating the presence of a restaurant in that area.
+A Python application has been developed to search for restaurants on the map. Additionally, it incorporates the following features:
 
 Plot restaurants across Cebu.
 ![image](https://github.com/marykrisv/mymap/assets/20874676/3af98195-4daf-4ed7-9c15-89484d445669)
